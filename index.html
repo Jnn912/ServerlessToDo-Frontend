@@ -28,22 +28,26 @@
       try {
         // 从表单中提取数据
         const formData = new FormData(form);
+        const dueDate = formData.get('dueDate'); // 例如 "2025-04-16"
+        const formattedDate = dueDate.replace(/-/g, '/'); // 转换为 "2025/04/16"
+        const priority = formData.get('priority').toLowerCase(); // 转换为小写，例如 "high"
+        
         const data = {
           title: formData.get('title'),
-          priority: formData.get('priority'),
-          dueDate: formData.get('dueDate'),
-          assignee: formData.get('assignee')
+          priority: priority, // 小写，例如 "high"
+          date: formattedDate, // 修改为 date 字段名，格式为 "YYYY/MM/DD"
+          email: formData.get('assignee') // 修改为 email 字段名
         };
 
-        console.log('Sending JSON data:', data); // 调试日志
+        console.log('Sending JSON data:', data);
 
         // 发送 JSON 格式的请求
         const response = await fetch(form.action, {
           method: form.method,
           headers: {
-            'Content-Type': 'application/json' // 设置请求头为 JSON
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(data) // 将数据转换为 JSON 字符串
+          body: JSON.stringify(data)
         });
 
         console.log('Response received:', response);
