@@ -25,15 +25,23 @@
     document.querySelector('form').addEventListener('submit', async (event) => {
       event.preventDefault(); 
       const form = event.target;
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: new FormData(form),
-      });
-      if (response.ok) {
-        alert('Task added successfully!');
-        form.reset(); 
-      } else {
-        alert('Failed to add task. Please try again.');
+      try {
+        console.log('Sending request to:', form.action); // 调试日志
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+        });
+        console.log('Response received:', response); // 调试日志
+        if (response.ok) {
+          alert('Task added successfully!');
+          form.reset(); 
+        } else {
+          const errorText = await response.text();
+          alert(`Failed to add task: ${response.status} ${errorText}`);
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        alert('Failed to add task: Network error. Please check the console for details.');
       }
     });
   </script>
