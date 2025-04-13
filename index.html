@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Add Task</h1>
+  <form action="https://<your-function>.azurewebsites.net/api/AddTask" method="POST">
+    <label>Title:</label>
+    <input type="text" name="title" placeholder="e.g., Prepare report" required>
+    <label>Priority:</label>
+    <select name="priority" required>
+      <option value="High">High</option>
+      <option value="Low">Low</option>
+    </select>
+    <label>Due Date:</label>
+    <input type="date" name="dueDate" required>
+    <label>Assignee Email:</label>
+    <input type="email" name="assignee" placeholder="e.g., alice@example.com" required>
+    <button type="submit">Add Task</button>
+  </form>
+</body>
+</html>
